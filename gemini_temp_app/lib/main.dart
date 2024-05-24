@@ -5,6 +5,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 
+String getApiKey() {
+  return const String.fromEnvironment('GEMINI_API_KEY');
+}
+
 void main() {
   runApp(const ProviderScope(child: GeminiTempApp()));
 }
@@ -323,7 +327,7 @@ class GeminiTempLocalRetrievalViewModel extends StateNotifier<bool> {
       final content = [Content.text(prompt)];
       final model = GenerativeModel(
           model: 'gemini-pro',
-          apiKey: 'AIzaSyDvJGeUKMR_slPotd_SJNhM884nLXEUxXs');
+          apiKey: getApiKey());
 
       final response = await model.generateContent(content);
       var jsonResponse = json.decode(response.text!);
